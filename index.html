@@ -1,0 +1,1018 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!--
+    ============================================================
+    ANONYMITY NOTICE
+
+    The paper (00.main.tex) is currently submitted as "Anonymous Authors".
+    This page is therefore author-blind on purpose: no names, no
+    affiliations, no citation_author tags, no personal links.
+
+    After acceptance / de-anonymization:
+      1. Uncomment the author block in the hero section below.
+      2. Uncomment the citation_author + author meta tags below.
+      3. Replace every REPLACE-ME URL with the real project domain.
+      4. Fill in the arXiv / PDF / code buttons and drop .is-pending.
+    ============================================================
+  -->
+
+  <!-- Primary Meta Tags -->
+  <meta name="title" content="Agentic Intelligence and Latent Lookahead for Robust Manipulation">
+  <meta name="description" content="A closed-loop manipulation policy that proposes executable programs, imagines their outcomes in a JEPA-style latent world model, and ranks them before the arm moves. 0.64 average success on LIBERO-PRO and 94.0% on Meta-World.">
+  <meta name="keywords" content="robot manipulation, agentic policy, program synthesis, robot DSL, latent world model, JEPA, verify-then-execute, LIBERO-PRO, LIBERO-X, Meta-World, distribution shift, vision-language-action">
+  <meta name="robots" content="index, follow">
+  <meta name="language" content="English">
+  <!-- <meta name="author" content="TODO: add after de-anonymization"> -->
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Agentic Intelligence and Latent Lookahead for Robust Manipulation">
+  <meta property="og:description" content="Propose programs, imagine them in latent space, rank them, then execute. 0.50/0.49 Position/Task success on LIBERO-PRO Spatial where OpenVLA and pi-0 score 0.00.">
+  <!-- TODO: replace REPLACE-ME with the real host before publishing -->
+  <meta property="og:url" content="https://REPLACE-ME.github.io/AgenticIntelligence/">
+  <meta property="og:image" content="https://REPLACE-ME.github.io/AgenticIntelligence/static/images/teaser.png">
+  <meta property="og:image:alt" content="Three paradigms for robot manipulation: VLA models, pixel world models, and the proposed agentic model">
+  <meta property="article:section" content="Robotics">
+  <meta property="article:tag" content="robot manipulation">
+  <meta property="article:tag" content="latent world model">
+  <meta property="article:tag" content="program synthesis">
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Agentic Intelligence and Latent Lookahead for Robust Manipulation">
+  <meta name="twitter:description" content="Propose programs, imagine them in latent space, rank them, then execute. 0.64 average success on LIBERO-PRO.">
+  <meta name="twitter:image" content="https://REPLACE-ME.github.io/AgenticIntelligence/static/images/teaser.png">
+  <meta name="twitter:image:alt" content="Three paradigms for robot manipulation: VLA models, pixel world models, and the proposed agentic model">
+
+  <!-- Academic / Google Scholar -->
+  <meta name="citation_title" content="Agentic Intelligence and Latent Lookahead for Robust Manipulation">
+  <!-- Author tags intentionally omitted while under anonymous review.
+  <meta name="citation_author" content="TODO">
+  <meta name="citation_conference_title" content="IEEE International Conference on Robotics and Automation (ICRA)">
+  <meta name="citation_pdf_url" content="TODO">
+  -->
+
+  <!-- Additional SEO -->
+  <meta name="theme-color" content="#4f46e5">
+  <meta name="msapplication-TileColor" content="#4f46e5">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <link rel="canonical" href="https://REPLACE-ME.github.io/AgenticIntelligence/">
+
+  <!-- Preconnect for performance -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+
+  <title>Agentic Intelligence and Latent Lookahead for Robust Manipulation</title>
+
+  <!-- Favicon and App Icons -->
+  <link rel="icon" type="image/png" href="static/images/robot.png">
+  <link rel="apple-touch-icon" href="static/images/robot.png">
+
+  <!-- Critical CSS - Load synchronously -->
+  <link rel="stylesheet" href="static/css/bulma.min.css">
+  <link rel="stylesheet" href="static/css/index.css">
+
+  <!-- Non-critical CSS - Load asynchronously -->
+  <link rel="preload" href="static/css/fontawesome.all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <link rel="preload" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+
+  <noscript>
+    <link rel="stylesheet" href="static/css/fontawesome.all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  </noscript>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Defer non-critical JavaScript -->
+  <script defer src="static/js/fontawesome.all.min.js"></script>
+  <script defer src="static/js/index.js"></script>
+
+  <!-- Structured Data for Academic Papers -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ScholarlyArticle",
+    "headline": "Agentic Intelligence and Latent Lookahead for Robust Manipulation",
+    "description": "A closed-loop manipulation policy in which a frozen vision-language agent proposes programs in a nine-primitive robot DSL, a Code-to-Token Bridge conditions a JEPA-style latent dynamics model, and a learned verifier ranks imagined trajectories before execution.",
+    "keywords": ["robot manipulation", "program synthesis", "latent world model", "JEPA", "LIBERO-PRO", "Meta-World", "distribution shift"],
+    "abstract": "Robust manipulation under distribution shift requires both grounding the current scene and comparing candidate commitments before execution. A frozen vision-language agent proposes programs in a nine-primitive robot DSL with explicit geometric literals, a Code-to-Token Bridge conditions a JEPA-style latent dynamics model, and a learned verifier ranks imagined trajectories. On LIBERO-PRO Spatial the complete loop reaches 0.50 Position and 0.49 Task success; across Meta-World difficulty splits the system averages 94.0% success.",
+    "isAccessibleForFree": true,
+    "about": [
+      { "@type": "Thing", "name": "Robot Manipulation" },
+      { "@type": "Thing", "name": "World Models" }
+    ]
+  }
+  </script>
+</head>
+<body>
+
+<!-- Sticky section navigation -->
+<nav class="ai-nav" id="ai-nav" aria-label="Section navigation">
+  <div class="ai-nav-inner">
+    <a class="ai-nav-brand" href="#top">Agentic<span>Intelligence</span></a>
+    <button class="ai-nav-toggle" id="ai-nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
+      <i class="fas fa-bars"></i>
+    </button>
+    <div class="ai-nav-links" id="ai-nav-links">
+      <a href="#abstract">Abstract</a>
+      <a href="#method">Method</a>
+      <a href="#results">LIBERO-PRO</a>
+      <a href="#benchmarks">Benchmarks</a>
+      <a href="#ablation">Ablations</a>
+      <a href="#efficiency">Efficiency</a>
+      <a href="#auditability">Auditability</a>
+      <a href="#bibtex">BibTeX</a>
+    </div>
+  </div>
+  <div class="ai-progress" id="ai-progress"></div>
+</nav>
+
+<main id="main-content">
+  <a id="top"></a>
+
+  <section class="hero">
+    <div class="hero-body">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+            <h1 class="title is-1 publication-title">Agentic Intelligence and Latent Lookahead for Robust Manipulation</h1>
+
+            <div class="is-size-5 publication-authors">
+              <span class="author-block">Anonymous Authors</span>
+            </div>
+
+            <!--
+              After de-anonymization, replace the block above with:
+
+              <div class="is-size-5 publication-authors">
+                <span class="author-block">Md Selim Sarowar<sup>1</sup>,</span>
+                <span class="author-block">Sungho Kim<sup>1,&#8224;</sup></span>
+              </div>
+              <div class="is-size-6 publication-authors">
+                <span class="author-block"><sup>1</sup>Yeungnam University</span>
+                <br>
+                <span class="author-block eql-cntrb"><sup>&#8224;</sup>Corresponding author</span>
+              </div>
+            -->
+
+            <div class="ai-venue-badge">Under review &middot; ICRA 2027</div>
+
+            <div class="column has-text-centered">
+              <div class="publication-links">
+                <!-- TODO: swap each .is-pending span for a real <a href="..."> once the link exists. -->
+                <span class="link-block">
+                  <span class="button is-normal is-rounded is-dark is-pending">
+                    <span class="icon"><i class="ai ai-arxiv"></i></span>
+                    <span>arXiv soon</span>
+                  </span>
+                </span>
+
+                <span class="link-block">
+                  <span class="button is-normal is-rounded is-dark is-pending">
+                    <span class="icon"><i class="fas fa-file-pdf"></i></span>
+                    <span>Paper soon</span>
+                  </span>
+                </span>
+
+                <span class="link-block">
+                  <span class="button is-normal is-rounded is-dark is-pending">
+                    <span class="icon"><i class="fab fa-github"></i></span>
+                    <span>Code soon</span>
+                  </span>
+                </span>
+
+                <span class="link-block">
+                  <a href="#bibtex" class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon"><i class="fas fa-quote-left"></i></span>
+                    <span>Cite</span>
+                  </a>
+                </span>
+              </div>
+              <p class="ai-anon-note">
+                Author names, affiliations and code links are withheld while the paper is under anonymous review.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Teaser -->
+  <section class="hero teaser">
+    <div class="container is-max-desktop">
+      <div class="hero-body">
+        <figure class="ai-figure" style="margin-top:0">
+          <img src="static/images/teaser.png" class="ai-zoomable"
+               alt="Three paradigms for robot manipulation: a VLA model mapping images and language to actions, a pixel-predictive world model, and the proposed agentic model that proposes, imagines and verifies programs">
+          <figcaption>
+            <strong>Three paradigms for robot manipulation</strong>, drawn as a conceptual contrast rather than a
+            measured comparison. (a) VLA models map images and language directly to actions; under the Position axis
+            of LIBERO-PRO their success collapses in a pattern consistent with memorized layout-trajectory pairs.
+            (b) Pixel-predictive world models forecast future frames, enabling look-ahead at high decoding cost.
+            (c) Our method proposes executable programs, predicts their outcomes in a JEPA-style latent model frozen
+            during planning, and ranks them before any motor command, reasoning in latent space rather than pixels.
+            The capability marks summarize each family's design, not per-cell experiments, and &ldquo;Low&rdquo;
+            compute refers to the local verification stack, excluding the proposer call.
+          </figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- Key numbers -->
+  <section class="section ai-stats-section">
+    <div class="container is-max-desktop">
+      <div class="ai-stats">
+        <div class="ai-stat">
+          <div class="ai-stat-value" data-count-to="0.64" data-decimals="2">0.00</div>
+          <div class="ai-stat-label">LIBERO-PRO average success</div>
+        </div>
+        <div class="ai-stat">
+          <div class="ai-stat-value" data-count-to="94.0" data-decimals="1" data-suffix="%">0%</div>
+          <div class="ai-stat-label">Meta-World average success</div>
+        </div>
+        <div class="ai-stat">
+          <div class="ai-stat-value" data-count-to="52.9" data-decimals="1">0.0</div>
+          <div class="ai-stat-label">LIBERO-X average accuracy</div>
+        </div>
+        <div class="ai-stat">
+          <div class="ai-stat-value" data-count-to="15.46" data-decimals="2" data-suffix=" ms">0 ms</div>
+          <div class="ai-stat-label">Local verification per cycle</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Abstract -->
+  <section class="section hero is-light" id="abstract">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <h2 class="title is-3">Abstract</h2>
+          <div class="content has-text-justified">
+            <p>
+              Robust manipulation under distribution shift requires both grounding the current scene and comparing
+              candidate commitments before execution. We present a closed-loop policy in which a frozen
+              vision-language agent proposes programs in a <strong>nine-primitive robot DSL</strong> with explicit
+              geometric literals, a <strong>Code-to-Token Bridge</strong> conditions a JEPA-style latent dynamics
+              model, and a <strong>learned verifier</strong> ranks imagined trajectories. On LIBERO-PRO Spatial,
+              one-shot program execution without imagination or ranking already reaches 0.38 Position and 0.37 Task
+              success; the complete loop reaches 0.50 and 0.49, respectively. Thus the program interface accounts for
+              most of the nonzero shifted performance, while replanning and selection add a 0.12 average gain. On
+              byte-identical candidate sets, the latent ranker reaches 0.63 Top-1 success versus 0.57 for first-valid
+              selection, with selector efficiency &eta;&nbsp;=&nbsp;0.40 (95% CI 0.22&ndash;0.58; exact McNemar
+              <em>p</em>&nbsp;&lt;&nbsp;0.001). Oracle coverage is 0.75, identifying candidate generation as the larger
+              remaining bottleneck. The gain is not uniform: Spatial-Semantic success is 0.73, below the displayed
+              0.88&ndash;0.97 range. Across the reported Meta-World difficulty splits, the system averages 94.0%
+              success. At K&nbsp;=&nbsp;3, H&nbsp;=&nbsp;8, local verification takes 15.46&nbsp;ms
+              (64.7&nbsp;cycles/s), whereas synchronous proposal plus verification takes 10.021&nbsp;s
+              (0.10&nbsp;decisions/s) before task-dependent execution.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Method -->
+  <section class="section" id="method">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3 has-text-centered">The Planning Loop</h2>
+      <p class="ai-section-intro">
+        One planning round runs four stages. Pick a stage to see what it does and what it costs.
+      </p>
+
+      <div class="ai-loop">
+        <div class="ai-loop-stages" role="tablist" aria-label="Planning stages">
+          <button class="ai-stage" role="tab" aria-selected="true" data-stage="propose" style="--stage-c:var(--stage-propose)">
+            <span class="ai-stage-num">1</span>
+            <span>
+              <span class="ai-stage-name">Propose</span>
+              <span class="ai-stage-sub">Frozen agent &rarr; K DSL programs</span>
+            </span>
+          </button>
+          <div class="ai-stage-arrow" role="presentation" aria-hidden="true"><i class="fas fa-arrow-down"></i></div>
+
+          <button class="ai-stage" role="tab" aria-selected="false" data-stage="imagine" style="--stage-c:var(--stage-imagine)">
+            <span class="ai-stage-num">2</span>
+            <span>
+              <span class="ai-stage-name">Imagine</span>
+              <span class="ai-stage-sub">Latent rollout, H steps per candidate</span>
+            </span>
+          </button>
+          <div class="ai-stage-arrow" role="presentation" aria-hidden="true"><i class="fas fa-arrow-down"></i></div>
+
+          <button class="ai-stage" role="tab" aria-selected="false" data-stage="verify" style="--stage-c:var(--stage-verify)">
+            <span class="ai-stage-num">3</span>
+            <span>
+              <span class="ai-stage-name">Verify</span>
+              <span class="ai-stage-sub">Score trajectories, pick the winner</span>
+            </span>
+          </button>
+          <div class="ai-stage-arrow" role="presentation" aria-hidden="true"><i class="fas fa-arrow-down"></i></div>
+
+          <button class="ai-stage" role="tab" aria-selected="false" data-stage="execute" style="--stage-c:var(--stage-execute)">
+            <span class="ai-stage-num">4</span>
+            <span>
+              <span class="ai-stage-name">Execute</span>
+              <span class="ai-stage-sub">Commit &kappa; primitives, then re-observe</span>
+            </span>
+          </button>
+        </div>
+
+        <div class="ai-loop-detail" id="ai-loop-detail">
+          <div class="ai-loop-eyebrow"></div>
+          <h3></h3>
+          <p class="ai-loop-lead"></p>
+          <p class="ai-loop-body"></p>
+          <div class="ai-loop-spec"></div>
+        </div>
+      </div>
+
+      <figure class="ai-figure">
+        <img src="static/images/framework.png" class="ai-zoomable"
+             alt="The full framework: observation and task instruction feed a frozen vision-language agent that returns K candidate DSL programs, which are embedded by the program encoder, rolled out by a V-JEPA encoder and program dynamics model, scored by a trajectory verifier, and executed by an AST-parsed operational-space controller">
+        <figcaption>
+          <strong>The complete verify-then-execute framework.</strong> A frozen vision-language agent
+          (<span style="color:#d97706;font-weight:700">&#9312; Propose</span>) returns an ordered list of
+          <em>K</em> raw program candidates from one request under fixed decoding settings. Candidates are parsed
+          first; valid programs are embedded by the Code-to-Token Bridge and rolled out in the latent space of a
+          JEPA-style world model frozen during planning
+          (<span style="color:#2563eb;font-weight:700">&#9313; Imagine</span>). The verifier
+          (<span style="color:#7c3aed;font-weight:700">&#9314; Verify</span>) scores each imagined trajectory against
+          the task embedding and selects the winner, executed through operational-space-control primitives
+          (<span style="color:#059669;font-weight:700">&#9315; Execute</span>). When a commit ends without success the
+          agent re-observes and starts another planning round, at most <em>N</em> rounds within the 600-step budget.
+        </figcaption>
+      </figure>
+
+      <h2 class="title is-3 has-text-centered" style="margin-top:3.5rem">Components</h2>
+      <p class="ai-section-intro">Four learned or symbolic pieces sit between language and motor commands.</p>
+
+      <div class="ai-tabs" role="tablist">
+        <button class="ai-tab is-active" role="tab" aria-selected="true" data-tab="dsl">Robot DSL</button>
+        <button class="ai-tab" role="tab" aria-selected="false" data-tab="bridge">Code-to-Token Bridge</button>
+        <button class="ai-tab" role="tab" aria-selected="false" data-tab="world">Latent World Model</button>
+        <button class="ai-tab" role="tab" aria-selected="false" data-tab="verifier">Trajectory Verifier</button>
+      </div>
+
+      <div class="ai-tab-panel is-active" role="tabpanel" data-panel="dsl">
+        <div class="ai-note-grid">
+          <div class="ai-note">
+            <h3>What it is</h3>
+            <p>Nine primitives, each taking literal arguments only. Cartesian positions are metres in the robot-base
+              frame, orientations are normalized quaternions with <em>q<sub>w</sub></em>&nbsp;&ge;&nbsp;0, joint
+              targets are radians, and <code>wait</code> takes an integer number of low-level steps.</p>
+          </div>
+          <div class="ai-note">
+            <h3>Why it matters</h3>
+            <p>The executor never queries a simulator object pose, so the program must carry the geometric target
+              literals the tracker needs. Writing coordinates rather than replaying a trajectory is what keeps
+              Position-axis success nonzero.</p>
+          </div>
+        </div>
+
+        <div class="ai-dsl">
+          <code>move_to</code><code>move_to_pose</code><code>grasp</code><code>release</code><code>place</code><code>move_joints</code><code>open_gripper</code><code>close_gripper</code><code>wait</code>
+        </div>
+
+        <pre class="ai-snippet" style="margin-top:1.25rem"><code><span class="c"># one candidate program, parsed by AST before anything learned sees it</span>
+<span class="f">robot.open_gripper</span>()
+<span class="f">robot.move_to</span>(<span class="n">-0.22</span>, <span class="n">0.02</span>, <span class="n">1.02</span>)
+<span class="f">robot.grasp</span>(<span class="n">'bowl'</span>)
+<span class="f">robot.place</span>(<span class="n">0.07</span>, <span class="n">0.16</span>, <span class="n">1.00</span>)
+<span class="f">robot.release</span>()</code></pre>
+        <p class="ai-table-note">
+          The AST interpreter whitelists the nine primitives, accepts literals only, and never invokes
+          <code>exec()</code>. Invalid programs are discarded without repair.
+        </p>
+      </div>
+
+      <div class="ai-tab-panel" role="tabpanel" data-panel="bridge">
+        <div class="ai-note-grid">
+          <div class="ai-note">
+            <h3>What it does</h3>
+            <p>Tokenizes DSL source with BPE under a 256-token cap, applies a 4-layer, 8-head transformer with masked
+              mean pooling, and projects to a 512-d program embedding that the world model can consume as
+              conditioning.</p>
+          </div>
+          <div class="ai-note">
+            <h3>How it is trained</h3>
+            <p>Contrastively, on labeled program pairs: a BCE term on scaled cosine similarity plus a symmetric
+              InfoNCE term at temperature 0.1. The loss groups literal variants of one behavior and separates distinct
+              skills.</p>
+          </div>
+        </div>
+        <p class="ai-table-note">
+          <strong>Stated limitation.</strong> The loss constrains program-to-program geometry, not alignment to the
+          training-time action surrogate the dynamics head was fit on, so substituting the bridge at inference is
+          empirical rather than invariant by construction. Adding paired alignment raises Pair-AUC from 0.70 to 0.78
+          in the interface ablation below.
+        </p>
+      </div>
+
+      <div class="ai-tab-panel" role="tabpanel" data-panel="world">
+        <div class="ai-note-grid">
+          <div class="ai-note">
+            <h3>Dual encoder</h3>
+            <p>Online and target ViT-B/14 encoders share architecture; the stop-gradient target follows an EMA with
+              &alpha;&nbsp;=&nbsp;0.996. Twelve transformer blocks encode each 224&times;224 frame, temporal attention
+              pools per-frame CLS tokens, and projected 14-d proprioception is added to the 768-d output.</p>
+          </div>
+          <div class="ai-note">
+            <h3>Two heads</h3>
+            <p>An action-dynamics head grounds the encoder in single-step consequences during pretraining. A
+              program-conditioned head decodes <em>H</em> queries from the seed latent, with AdaLN-Zero conditioning
+              made explicitly horizon-dependent so the modulation varies with the prediction step.</p>
+          </div>
+        </div>
+        <p class="ai-table-note">
+          Every learned loss lives in the 768-dimensional latent space; the architecture contains no pixel decoder.
+          Removing the horizon code worsens normalized latent MSE from 0.35/0.60 to 0.42/0.80 at horizons 3 and 8, and
+          drops selector efficiency from 0.40 to 0.25.
+        </p>
+      </div>
+
+      <div class="ai-tab-panel" role="tabpanel" data-panel="verifier">
+        <div class="ai-note-grid">
+          <div class="ai-note">
+            <h3>Two heads, one score</h3>
+            <p>A 2-layer MLP trunk over the concatenation of each latent and the frozen task embedding, with a horizon
+              head estimating success by step <em>h</em> and a terminal head estimating success at the end. The
+              planning score is half the terminal head plus half the horizon mean.</p>
+          </div>
+          <div class="ai-note">
+            <h3>Sparse supervision only</h3>
+            <p>Both heads train on the sparse task-success predicate, with the horizon head weighted at 0.5. The
+              verifier never reads program text, so different scores require the dynamics model to separate imagined
+              outcomes.</p>
+          </div>
+        </div>
+        <p class="ai-table-note">
+          <strong>Stated limitation.</strong> Training consumes stop-gradient target-encoder trajectories while
+          planning scores imagined ones, leaving a measured encoded-to-imagined AUROC gap of 0.06 (0.78 versus 0.72).
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- LIBERO-PRO -->
+  <section class="section hero is-light" id="results">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3 has-text-centered">LIBERO-PRO</h2>
+      <p class="ai-section-intro">
+        Normalized success under five perturbation axes. Pick a suite; click a column header to sort.
+        Cell shading tracks the value, so the Position and Task columns read at a glance.
+      </p>
+
+      <div class="ai-tabs" id="ai-suite-picker" role="tablist" aria-label="LIBERO suite">
+        <button class="ai-tab" role="tab" aria-selected="false" data-suite="goal">LIBERO Goal</button>
+        <button class="ai-tab is-active" role="tab" aria-selected="true" data-suite="spatial">LIBERO Spatial</button>
+        <button class="ai-tab" role="tab" aria-selected="false" data-suite="libero10">LIBERO 10</button>
+        <button class="ai-tab" role="tab" aria-selected="false" data-suite="object">LIBERO Object</button>
+      </div>
+
+      <div class="ai-axis-key">
+        <span><b>Obj</b> object swapped</span>
+        <span class="is-focus"><b>Pos</b> object placement changed</span>
+        <span><b>Sem</b> instruction rephrased</span>
+        <span class="is-focus"><b>Task</b> target object or action changed</span>
+        <span><b>Env</b> scene appearance changed</span>
+      </div>
+
+      <div class="ai-table-controls">
+        <span class="ai-sort-hint"><i class="fas fa-sort"></i> click any header to sort</span>
+        <span class="ai-sort-hint">Avg. SR is each row's average over its own reported cells, across all four suites</span>
+      </div>
+
+      <div class="ai-table-wrap">
+        <table class="ai-table" id="ai-pro-table">
+          <thead>
+            <tr>
+              <th class="ai-sortable ai-th-text" scope="col">Model <i class="fas fa-sort"></i></th>
+              <th class="ai-sortable" scope="col">Obj <i class="fas fa-sort"></i></th>
+              <th class="ai-sortable" scope="col">Pos <i class="fas fa-sort"></i></th>
+              <th class="ai-sortable" scope="col">Sem <i class="fas fa-sort"></i></th>
+              <th class="ai-sortable" scope="col">Task <i class="fas fa-sort"></i></th>
+              <th class="ai-sortable" scope="col">Env <i class="fas fa-sort"></i></th>
+              <th class="ai-sortable ai-col-avg" scope="col">Avg. SR <i class="fas fa-sort"></i></th>
+            </tr>
+          </thead>
+          <tbody><!-- rendered by static/js/index.js from the paper's Table II --></tbody>
+        </table>
+      </div>
+      <p class="ai-table-note">
+        Dashes mark cells the source did not report, and are never imputed. On the Spatial suite, OpenVLA and
+        &pi;<sub>0</sub> score 0.00 on both Position and Task, while our loop reaches 0.50 and 0.49. The gain is a
+        redistribution rather than uniform dominance: Spatial-Semantic success is 0.73 against 0.88&ndash;0.97 for the
+        displayed baselines, and the Object-suite Object score is 0.76 against leaders at 0.98.
+      </p>
+
+      <figure class="ai-figure">
+        <img src="static/images/libero_pro_frames.jpg" class="ai-zoomable"
+             alt="Rollout frames from initial state through execution to end state for the Spatial, Goal, Object and Long-horizon LIBERO suites">
+        <figcaption>
+          <strong>Representative successful Position-shift rollouts</strong> across the Spatial, Goal, Object and
+          Long-horizon suites. Each sequence runs from the initial state through intermediate execution to a
+          successful terminal state, qualitatively confirming that the controller adapts its explicit geometric
+          program to changed object placement rather than executing one fixed scene-specific trajectory.
+        </figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- Cross-benchmark -->
+  <section class="section" id="benchmarks">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3 has-text-centered">Meta-World and LIBERO-X</h2>
+      <p class="ai-section-intro">Hover a bar to read its exact value.</p>
+
+      <div class="ai-chart">
+        <div class="ai-legend">
+          <span class="ai-legend-item"><i class="ai-swatch ai-c-a"></i>Mamba Policy</span>
+          <span class="ai-legend-item"><i class="ai-swatch ai-c-b"></i>HarmonyDream</span>
+          <span class="ai-legend-item"><i class="ai-swatch ai-c-c"></i>&pi;<sub>0</sub></span>
+          <span class="ai-legend-item"><i class="ai-swatch ai-c-ours"></i>Ours</span>
+        </div>
+        <div class="ai-groups">
+          <div class="ai-group">
+            <div class="ai-cols">
+              <div class="ai-col ai-c-a" style="--h:95.4%" data-v="95.4"><span>95.4</span></div>
+              <div class="ai-col ai-c-b" style="--h:81.0%" data-v="81.0"><span>81.0</span></div>
+              <div class="ai-col ai-c-c" style="--h:71.8%" data-v="71.8"><span>71.8</span></div>
+              <div class="ai-col ai-c-ours" style="--h:98.3%" data-v="98.3"><span>98.3</span></div>
+            </div>
+            <div class="ai-group-label">Easy</div>
+          </div>
+          <div class="ai-group">
+            <div class="ai-cols">
+              <div class="ai-col ai-c-a" style="--h:92.2%" data-v="92.2"><span>92.2</span></div>
+              <div class="ai-col ai-c-b" style="--h:91.0%" data-v="91.0"><span>91.0</span></div>
+              <div class="ai-col ai-c-c" style="--h:48.2%" data-v="48.2"><span>48.2</span></div>
+              <div class="ai-col ai-c-ours" style="--h:95.7%" data-v="95.7"><span>95.7</span></div>
+            </div>
+            <div class="ai-group-label">Mid</div>
+          </div>
+          <div class="ai-group">
+            <div class="ai-cols">
+              <div class="ai-col ai-c-a" style="--h:48.3%" data-v="48.3"><span>48.3</span></div>
+              <div class="ai-col ai-c-b" style="--h:72.5%" data-v="72.5"><span>72.5</span></div>
+              <div class="ai-col ai-c-c" style="--h:41.7%" data-v="41.7"><span>41.7</span></div>
+              <div class="ai-col ai-c-ours" style="--h:91.3%" data-v="91.3"><span>91.3</span></div>
+            </div>
+            <div class="ai-group-label">Hard</div>
+          </div>
+          <div class="ai-group">
+            <div class="ai-cols">
+              <div class="ai-col ai-c-a" style="--h:71.2%" data-v="71.2"><span>71.2</span></div>
+              <div class="ai-col ai-c-b" style="--h:44.5%" data-v="44.5"><span>44.5</span></div>
+              <div class="ai-col ai-c-c" style="--h:30.0%" data-v="30.0"><span>30.0</span></div>
+              <div class="ai-col ai-c-ours" style="--h:90.6%" data-v="90.6"><span>90.6</span></div>
+            </div>
+            <div class="ai-group-label">Very Hard</div>
+          </div>
+        </div>
+        <p class="ai-chart-caption">
+          Meta-World success rate (%) across difficulty splits, 20 episodes per task over 50 tasks. The three
+          strongest displayed baselines are shown; the full table is below. Protocol differences make this panel
+          contextual rather than a controlled cross-paper ranking.
+        </p>
+      </div>
+
+      <div class="ai-table-wrap" style="margin-top:2rem">
+        <table class="ai-table">
+          <caption class="ai-caption">Meta-World success (%) across difficulty splits</caption>
+          <thead>
+            <tr>
+              <th class="ai-th-text" scope="col">Method</th>
+              <th class="ai-th-text" scope="col">Venue</th>
+              <th scope="col">Easy</th><th scope="col">Mid</th><th scope="col">Hard</th><th scope="col">V. Hard</th>
+              <th class="ai-col-avg" scope="col">Avg.</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><th scope="row">HarmonyDream</th><td class="ai-th-text">ICML'24</td><td>81.0</td><td>91.0</td><td>72.5</td><td>44.5</td><td class="ai-col-avg">72.3</td></tr>
+            <tr><th scope="row">DP</th><td class="ai-th-text">IJRR'25</td><td>83.6</td><td>31.1</td><td>9.0</td><td>26.6</td><td class="ai-col-avg">37.6</td></tr>
+            <tr><th scope="row">TinyVLA</th><td class="ai-th-text">RA-L'25</td><td>77.6</td><td>21.5</td><td>11.4</td><td>15.8</td><td class="ai-col-avg">31.6</td></tr>
+            <tr><th scope="row">Mamba Policy</th><td class="ai-th-text">IROS'25</td><td>95.4</td><td>92.2</td><td>48.3</td><td>71.2</td><td class="ai-col-avg">76.8</td></tr>
+            <tr><th scope="row">&pi;<sub>0</sub></th><td class="ai-th-text">RSS'25</td><td>71.8</td><td>48.2</td><td>41.7</td><td>30.0</td><td class="ai-col-avg">47.9</td></tr>
+            <tr class="ai-ours"><th scope="row">Agentic Intelligence <span class="ai-ours-tag">Ours</span></th><td class="ai-th-text">&ndash;</td><td>98.3</td><td>95.7</td><td>91.3</td><td>90.6</td><td class="ai-col-avg">94.0</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3 class="title is-4 has-text-centered" style="margin-top:3rem">Degradation under cumulative severity</h3>
+      <p class="ai-section-intro">
+        LIBERO-X grades distribution shift across five cumulative severity levels. Our accuracy decreases
+        monotonically from 73.6 at Level&nbsp;1 to 33.8 at Level&nbsp;5, remaining above every displayed baseline at
+        each level.
+      </p>
+
+      <div class="ai-chart">
+        <div class="ai-legend">
+          <span class="ai-legend-item"><i class="ai-swatch ai-c-a"></i>&pi;<sub>0.5</sub></span>
+          <span class="ai-legend-item"><i class="ai-swatch ai-c-b"></i>GR00T N1.5</span>
+          <span class="ai-legend-item"><i class="ai-swatch ai-c-c"></i>&pi;<sub>0</sub></span>
+          <span class="ai-legend-item"><i class="ai-swatch ai-c-ours"></i>Ours</span>
+        </div>
+        <div class="ai-groups is-five">
+          <div class="ai-group">
+            <div class="ai-cols">
+              <div class="ai-col ai-c-a" style="--h:65.2%" data-v="65.2"><span>65.2</span></div>
+              <div class="ai-col ai-c-b" style="--h:43.3%" data-v="43.3"><span>43.3</span></div>
+              <div class="ai-col ai-c-c" style="--h:29.4%" data-v="29.4"><span>29.4</span></div>
+              <div class="ai-col ai-c-ours" style="--h:73.6%" data-v="73.6"><span>73.6</span></div>
+            </div>
+            <div class="ai-group-label">L1</div>
+          </div>
+          <div class="ai-group">
+            <div class="ai-cols">
+              <div class="ai-col ai-c-a" style="--h:53.2%" data-v="53.2"><span>53.2</span></div>
+              <div class="ai-col ai-c-b" style="--h:32.9%" data-v="32.9"><span>32.9</span></div>
+              <div class="ai-col ai-c-c" style="--h:21.9%" data-v="21.9"><span>21.9</span></div>
+              <div class="ai-col ai-c-ours" style="--h:62.9%" data-v="62.9"><span>62.9</span></div>
+            </div>
+            <div class="ai-group-label">L2</div>
+          </div>
+          <div class="ai-group">
+            <div class="ai-cols">
+              <div class="ai-col ai-c-a" style="--h:36.0%" data-v="36.0"><span>36.0</span></div>
+              <div class="ai-col ai-c-b" style="--h:18.7%" data-v="18.7"><span>18.7</span></div>
+              <div class="ai-col ai-c-c" style="--h:11.0%" data-v="11.0"><span>11.0</span></div>
+              <div class="ai-col ai-c-ours" style="--h:52.4%" data-v="52.4"><span>52.4</span></div>
+            </div>
+            <div class="ai-group-label">L3</div>
+          </div>
+          <div class="ai-group">
+            <div class="ai-cols">
+              <div class="ai-col ai-c-a" style="--h:24.1%" data-v="24.1"><span>24.1</span></div>
+              <div class="ai-col ai-c-b" style="--h:13.3%" data-v="13.3"><span>13.3</span></div>
+              <div class="ai-col ai-c-c" style="--h:7.6%" data-v="7.6"><span>7.6</span></div>
+              <div class="ai-col ai-c-ours" style="--h:41.7%" data-v="41.7"><span>41.7</span></div>
+            </div>
+            <div class="ai-group-label">L4</div>
+          </div>
+          <div class="ai-group">
+            <div class="ai-cols">
+              <div class="ai-col ai-c-a" style="--h:18.0%" data-v="18.0"><span>18.0</span></div>
+              <div class="ai-col ai-c-b" style="--h:9.7%" data-v="9.7"><span>9.7</span></div>
+              <div class="ai-col ai-c-c" style="--h:5.1%" data-v="5.1"><span>5.1</span></div>
+              <div class="ai-col ai-c-ours" style="--h:33.8%" data-v="33.8"><span>33.8</span></div>
+            </div>
+            <div class="ai-group-label">L5</div>
+          </div>
+        </div>
+        <p class="ai-chart-caption">
+          LIBERO-X accuracy (%) under increasing cumulative perturbation severity. L1&ndash;L3 use 600 tasks,
+          L4&ndash;L5 use 826 tasks. Averaged over levels: ours 52.9, &pi;<sub>0.5</sub> 39.3, GR00T N1.5 23.6,
+          &pi;<sub>0</sub> 15.0, X-VLA 14.6, OpenVLA-OFT 13.2.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Ablation -->
+  <section class="section hero is-light" id="ablation">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3 has-text-centered">What Each Part Is Worth</h2>
+      <p class="ai-section-intro">
+        Switch the decision rule to separate the program interface from replanning and ranking. Every row received
+        byte-identical ordered candidates, and candidate forks restored the same simulator and RNG state.
+      </p>
+
+      <div class="ai-builder">
+        <div class="ai-builder-controls" role="tablist" aria-label="Decision rule">
+          <button class="ai-rule is-active" role="tab" aria-selected="true" data-rule="ranker">
+            <strong>Latent ranker</strong><em>K = 3, imagine and score</em>
+          </button>
+          <button class="ai-rule" role="tab" aria-selected="false" data-rule="first">
+            <strong>First valid</strong><em>K = 3, no scoring</em>
+          </button>
+          <button class="ai-rule" role="tab" aria-selected="false" data-rule="random">
+            <strong>Uniform random</strong><em>K = 3, random pick</em>
+          </button>
+          <button class="ai-rule" role="tab" aria-selected="false" data-rule="oneshot">
+            <strong>One-shot program</strong><em>K = 1, no loop</em>
+          </button>
+        </div>
+
+        <div class="ai-builder-readout">
+          <div class="ai-variant-name" id="ai-rule-name">Latent ranker</div>
+          <div class="ai-rule-detail" id="ai-rule-detail"></div>
+
+          <div class="ai-metric">
+            <div class="ai-metric-head"><span>Position-axis success</span><span class="ai-metric-val" id="ai-m-pos">0.50</span></div>
+            <div class="ai-bar"><div class="ai-bar-fill" id="ai-b-pos" style="width:50%"></div></div>
+          </div>
+          <div class="ai-metric">
+            <div class="ai-metric-head"><span>Task-axis success</span><span class="ai-metric-val" id="ai-m-task">0.49</span></div>
+            <div class="ai-bar"><div class="ai-bar-fill is-alt" id="ai-b-task" style="width:49%"></div></div>
+          </div>
+
+          <div class="ai-metric-grid">
+            <div><span class="ai-mg-label">Planning rounds</span><span class="ai-mg-val" id="ai-m-rounds">3.1</span></div>
+            <div><span class="ai-mg-label">Commit &kappa;</span><span class="ai-mg-val" id="ai-m-commit">2</span></div>
+            <div><span class="ai-mg-label">Env. steps</span><span class="ai-mg-val" id="ai-m-steps">410</span></div>
+            <div><span class="ai-mg-label">Zero-valid</span><span class="ai-mg-val" id="ai-m-invalid">1.8%</span></div>
+          </div>
+
+          <p class="ai-delta" id="ai-delta"></p>
+        </div>
+      </div>
+
+      <p class="ai-table-note">
+        Task-aggregated point estimates on LIBERO-PRO Spatial. All K&nbsp;=&nbsp;3 rows fix the commit length,
+        round budget and step ceiling. At this sample size, differences below roughly 0.10 should be read cautiously;
+        the paired test below is the powered evidence for the ranking claim.
+      </p>
+
+      <h3 class="title is-4 has-text-centered" style="margin-top:3.5rem">Same-candidate selector diagnostic</h3>
+      <p class="ai-section-intro">
+        Every valid candidate ran to completion from the same restored state, so the only thing that varies is which
+        one the rule picks. M&nbsp;=&nbsp;800 states, mean 2.88 valid candidates, prevalence 0.52.
+      </p>
+
+      <div class="ai-chart">
+        <div class="ai-ladder">
+          <div class="ai-rung is-bound" style="--w:75%">
+            <span class="ai-rung-label">Oracle @ K</span>
+            <span class="ai-rung-track"><span class="ai-rung-fill"></span></span>
+            <span class="ai-rung-val">0.75</span>
+          </div>
+          <div class="ai-rung is-ours" style="--w:63%">
+            <span class="ai-rung-label">Latent ranker</span>
+            <span class="ai-rung-track"><span class="ai-rung-fill"></span></span>
+            <span class="ai-rung-val">0.63</span>
+          </div>
+          <div class="ai-rung" style="--w:61%">
+            <span class="ai-rung-label">Step head only</span>
+            <span class="ai-rung-track"><span class="ai-rung-fill"></span></span>
+            <span class="ai-rung-val">0.61</span>
+          </div>
+          <div class="ai-rung" style="--w:60%">
+            <span class="ai-rung-label">Terminal head only</span>
+            <span class="ai-rung-track"><span class="ai-rung-fill"></span></span>
+            <span class="ai-rung-val">0.60</span>
+          </div>
+          <div class="ai-rung" style="--w:57%">
+            <span class="ai-rung-label">First valid</span>
+            <span class="ai-rung-track"><span class="ai-rung-fill"></span></span>
+            <span class="ai-rung-val">0.57</span>
+          </div>
+          <div class="ai-rung" style="--w:55%">
+            <span class="ai-rung-label">Uniform random</span>
+            <span class="ai-rung-track"><span class="ai-rung-fill"></span></span>
+            <span class="ai-rung-val">0.55</span>
+          </div>
+          <div class="ai-rung is-bound" style="--w:40%">
+            <span class="ai-rung-label">Anti-oracle</span>
+            <span class="ai-rung-track"><span class="ai-rung-fill"></span></span>
+            <span class="ai-rung-val">0.40</span>
+          </div>
+        </div>
+
+        <div class="ai-gap-note">
+          <div class="ai-gap">
+            <div class="ai-gap-val">+0.06</div>
+            <div class="ai-gap-label">Top-1 gain of the ranker over first-valid selection<br>
+              <em>n<sub>10</sub></em>&nbsp;=&nbsp;112, <em>n<sub>01</sub></em>&nbsp;=&nbsp;64, exact McNemar
+              <em>p</em>&nbsp;&lt;&nbsp;0.001</div>
+          </div>
+          <div class="ai-gap">
+            <div class="ai-gap-val">&eta; = 0.40</div>
+            <div class="ai-gap-label">Selector efficiency: how much of the random-to-oracle gap the ranker closes<br>
+              95% CI 0.22&ndash;0.58</div>
+          </div>
+          <div class="ai-gap">
+            <div class="ai-gap-val">0.25</div>
+            <div class="ai-gap-label">Coverage gap left by the proposer: the oracle itself tops out at 0.75<br>
+              the larger measured bottleneck</div>
+          </div>
+        </div>
+
+        <p class="ai-chart-caption">
+          Top-1 success on identical candidate sets. Deterministic rules use paired intervals and McNemar tests
+          against first-valid; exact random uses a paired bootstrap. The 95% interval spans the preregistered modest
+          and principal-effect regions, so we claim a measurable ranking contribution and report its uncertainty
+          rather than treating its magnitude as precisely established.
+        </p>
+      </div>
+
+      <h3 class="title is-4 has-text-centered" style="margin-top:3.5rem">Component and interface diagnostics</h3>
+      <div class="ai-table-wrap">
+        <table class="ai-table">
+          <thead>
+            <tr>
+              <th class="ai-th-text" scope="col">Variant</th>
+              <th scope="col">T<sub>p</sub>/H</th>
+              <th scope="col">Pair-AUC &uarr;</th>
+              <th scope="col">NMSE 3/8 &darr;</th>
+              <th scope="col">AUROC enc. &uarr;</th>
+              <th scope="col">AUROC imag. &uarr;</th>
+              <th scope="col">AP/prev. &uarr;</th>
+              <th class="ai-col-avg" scope="col">&eta;</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="ai-ours"><th scope="row">Full system</th><td>3/8</td><td>0.70</td><td>0.35/0.60</td><td>0.78</td><td>0.72</td><td>1.40</td><td class="ai-col-avg">0.40</td></tr>
+            <tr><th scope="row">No horizon code</th><td>3/8</td><td class="ai-na">=</td><td>0.42/0.80</td><td class="ai-na">=</td><td>0.64</td><td>1.21</td><td class="ai-col-avg">0.25</td></tr>
+            <tr><th scope="row">Terminal head only</th><td>3/8</td><td class="ai-na">=</td><td class="ai-na">=</td><td>0.75</td><td>0.68</td><td>1.26</td><td class="ai-col-avg">0.25</td></tr>
+            <tr><th scope="row">Step head only</th><td>3/8</td><td class="ai-na">=</td><td class="ai-na">=</td><td>0.76</td><td>0.70</td><td>1.33</td><td class="ai-col-avg">0.30</td></tr>
+            <tr><th scope="row">Paired bridge alignment</th><td>3/8</td><td>0.78</td><td>0.33/0.57</td><td class="ai-na">=</td><td>0.73</td><td>1.42</td><td class="ai-col-avg">0.41</td></tr>
+            <tr><th scope="row">Matched horizon</th><td>8/8</td><td class="ai-na">=</td><td>0.36/0.48</td><td class="ai-na">=</td><td>0.74</td><td>1.44</td><td class="ai-col-avg">0.42</td></tr>
+            <tr><th scope="row">Mixed-verifier training</th><td>3/8</td><td class="ai-na">=</td><td class="ai-na">=</td><td>0.76</td><td>0.75</td><td>1.46</td><td class="ai-col-avg">0.42</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="ai-table-note">
+        &ldquo;=&rdquo; marks cells identical to the full system by construction. The three interface corrections are
+        <strong>diagnostic</strong> improvements: end-to-end Position/Task success was not measured for those rows, so
+        they are not demonstrated policy gains. The no-horizon-code row is a single retraining run, a descriptive
+        architectural diagnostic rather than a seeded causal estimate.
+      </p>
+    </div>
+  </section>
+
+  <!-- Efficiency -->
+  <section class="section" id="efficiency">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3 has-text-centered">Verification Is Not the Bottleneck</h2>
+      <p class="ai-section-intro">
+        Measured at K&nbsp;=&nbsp;3, H&nbsp;=&nbsp;8 on one RTX PRO 6000 in FP16. GPU values are means over 200 cycles
+        after 20 warmups; the proposer round trip is the mean of 60 requests.
+      </p>
+
+      <div class="ai-split">
+        <div class="ai-split-bar">
+          <div class="ai-split-local" style="width:0.154%"></div>
+          <div class="ai-split-remote"></div>
+        </div>
+        <div class="ai-split-legend">
+          <span>Local verification stack: <b>15.46 ms</b> &middot; 0.154% of the decision path</span>
+          <span>Remote proposer round trip: <b>10 006 ms</b> &middot; 99.846%</span>
+        </div>
+      </div>
+
+      <div class="ai-table-wrap" style="margin-top:2rem">
+        <table class="ai-table">
+          <caption class="ai-caption">Measured planning cost at K = 3, H = 8</caption>
+          <thead>
+            <tr>
+              <th class="ai-th-text" scope="col">Stage</th>
+              <th scope="col">Mean ms</th>
+              <th scope="col">Rate (Hz)</th>
+              <th scope="col">Share</th>
+              <th scope="col">Params (M)</th>
+              <th scope="col">Peak GB</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><th scope="row">Encoder <em>E<sub>&theta;</sub></em></th><td>5.95</td><td class="ai-na">&ndash;</td><td>0.059%</td><td>93.4</td><td>0.54<sup>&dagger;</sup></td></tr>
+            <tr><th scope="row">Bridge <em>&phi;</em></th><td>4.38</td><td class="ai-na">&ndash;</td><td>0.044%</td><td>38.6</td><td>0.17<sup>&dagger;</sup></td></tr>
+            <tr><th scope="row"><em>D</em><sub>prog</sub> (batched K = 3)</th><td>4.28</td><td class="ai-na">&ndash;</td><td>0.043%</td><td>65.9</td><td>0.40<sup>&dagger;</sup></td></tr>
+            <tr><th scope="row">Verifier <em>R</em></th><td>0.85</td><td class="ai-na">&ndash;</td><td>0.008%</td><td>&lt; 1</td><td>&lt; 0.01<sup>&dagger;</sup></td></tr>
+            <tr class="ai-ours"><th scope="row">Local verification stack</th><td>15.46</td><td>64.7</td><td>0.154%</td><td>198.3</td><td>1.51<sup>&Dagger;</sup></td></tr>
+            <tr><th scope="row">Proposer (VLM, round trip)</th><td>10 006.00</td><td>0.100</td><td>99.846%</td><td class="ai-na">remote</td><td class="ai-na">remote</td></tr>
+            <tr><th scope="row">Decision path (synchronous)</th><td>10 021.46</td><td>0.100</td><td>100%</td><td class="ai-na">&ndash;</td><td>1.51<sup>&Dagger;</sup></td></tr>
+            <tr><th scope="row">Tracker / env. step<sup>&sect;</sup></th><td>0.52</td><td class="ai-na">&ndash;</td><td class="ai-na">excluded</td><td class="ai-na">n/a</td><td class="ai-na">n/a</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="ai-table-note">
+        <sup>&dagger;</sup>Module-isolated peak; these entries are not additive. <sup>&Dagger;</sup>Joint peak with all
+        local weights resident and peak activations. <sup>&sect;</sup>Per low-level environment step, excluded from
+        decision-path arithmetic because commit duration varies. The cached instruction encoder, one-time
+        parsing and preprocessing, and remote proposer parameters and memory are excluded. These are
+        planning-throughput figures rather than motor-control rates.
+      </p>
+
+      <figure class="ai-figure">
+        <img src="static/images/fig_cost.png" class="ai-zoomable"
+             alt="Horizontal bar chart on a log scale comparing per-cycle latency: encoder 5.95 ms, bridge 4.38 ms, program dynamics 4.28 ms, verifier 0.85 ms, and the remote VLM agent at 10006 ms">
+        <figcaption>
+          <strong>Per-cycle latency on a log scale.</strong> The four local modules sum to 15.5&nbsp;ms; the remote
+          agent call is nearly three orders of magnitude larger. Foresight is cheap relative to proposal.
+        </figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- Auditability -->
+  <section class="section hero is-light" id="auditability">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3 has-text-centered">An Auditable Decision Record</h2>
+      <p class="ai-section-intro">
+        The explicit program boundary leaves artifacts that reactive action generation does not expose directly.
+      </p>
+
+      <figure class="ai-figure" style="margin-top:0">
+        <img src="static/images/auditability.png" class="ai-zoomable"
+             alt="Side-by-side comparison: a low-level VLA policy emits opaque joint velocities with no explainable trace, while the program-generating approach emits inspectable source code where a syntax error is visible and debuggable">
+        <figcaption>
+          <strong>Decision auditability enabled by the explicit program interface.</strong> A reactive VLA exposes
+          primarily its selected motor output, whereas our system records ordered candidate programs, AST validity,
+          imagined latent consequences, verifier scores and the selected commitment before execution. Invalid code is
+          rejected without motor action, and retained alternatives permit post-hoc diagnosis of whether a failure
+          arose from proposal, parsing, prediction, selection or execution.
+        </figcaption>
+      </figure>
+
+      <p class="ai-table-note" style="text-align:center;max-width:760px;margin:0 auto">
+        This is a concrete systems property of the interface, not a claim about human interpretability. No user study
+        was run.
+      </p>
+
+      <h3 class="title is-4 has-text-centered" style="margin-top:3.5rem">Evidence Boundaries</h3>
+      <div class="ai-limits">
+        <div class="ai-limit">
+          <h3>The 0.12 gain is not all ranking</h3>
+          <p>The one-shot-to-full difference combines candidate count, replanning, imagination and ranking. Only the
+            same-candidate fork isolates selection, and it yields +0.06.</p>
+        </div>
+        <div class="ai-limit">
+          <h3>Proposal is the larger bottleneck</h3>
+          <p>The remaining oracle and coverage gaps are 0.12 and 0.25. Candidate generation, not ranking, is where the
+            most headroom sits.</p>
+        </div>
+        <div class="ai-limit">
+          <h3>Grounding error is not isolated</h3>
+          <p>The proposer writes the robot-base-frame literals and no learned converter modifies them. We do not
+            report a literal-to-ground-truth coordinate-error distribution, so Position-axis claims are made at the
+            interface level.</p>
+        </div>
+        <div class="ai-limit">
+          <h3>Robustness is a trade-off</h3>
+          <p>Spatial-Semantic success stays at 0.73, below every displayed baseline. The evidence supports a
+            redistribution of robustness, not uniform superiority.</p>
+        </div>
+        <div class="ai-limit">
+          <h3>Train and test interfaces differ</h3>
+          <p>Training supervises three latent steps while planning queries eight, and the dynamics head is trained on
+            an action surrogate but queried on the bridge. The substitution is empirical.</p>
+        </div>
+        <div class="ai-limit">
+          <h3>Correction rows are diagnostic only</h3>
+          <p>The interface corrections and the no-horizon-code row lack matched end-to-end reruns or multi-seed
+            intervals.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BibTeX -->
+  <section class="section" id="bibtex">
+    <div class="container is-max-desktop content">
+      <div class="bibtex-header">
+        <h2 class="title">BibTeX</h2>
+        <button class="copy-bibtex-btn" onclick="copyBibTeX()" title="Copy BibTeX to clipboard">
+          <i class="fas fa-copy"></i>
+          <span class="copy-text">Copy</span>
+        </button>
+      </div>
+      <!-- TODO: replace with the real entry once the paper is accepted and de-anonymized. -->
+      <pre id="bibtex-code"><code>@inproceedings{anonymous2027agentic,
+title     = {Agentic Intelligence and Latent Lookahead for Robust Manipulation},
+author    = {Anonymous},
+booktitle = {Under review at the IEEE International Conference on Robotics and Automation (ICRA)},
+year      = {2027}
+}</code></pre>
+      <p class="ai-table-note">
+        Placeholder entry. Author names are withheld while the paper is under anonymous review.
+      </p>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="content has-text-centered">
+        <p>
+          Page template adapted from <a href="https://nerfies.github.io" target="_blank" rel="noopener">Nerfies</a>,
+          licensed under <a href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener">CC BY-SA 4.0</a>.
+        </p>
+      </div>
+    </div>
+  </footer>
+</main>
+
+<!-- Scroll to top -->
+<button class="scroll-to-top" onclick="scrollToTop()" aria-label="Scroll back to top">
+  <i class="fas fa-arrow-up"></i>
+</button>
+
+<!-- Lightbox -->
+<div class="ai-lightbox" id="ai-lightbox" role="dialog" aria-modal="true" aria-label="Enlarged figure">
+  <button class="ai-lightbox-close" id="ai-lightbox-close" aria-label="Close">&times;</button>
+  <img id="ai-lightbox-img" src="" alt="">
+  <p class="ai-lightbox-caption" id="ai-lightbox-caption"></p>
+</div>
+
+</body>
+</html>
