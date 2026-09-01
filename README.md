@@ -31,9 +31,20 @@ python3 -m http.server 8000
 
 ```
 index.html              # the whole page
+rollouts.html           # LIBERO-X rollout browser (generated, see below)
+rollouts/               # one sprite per rollout, lazy-loaded by rollouts.html
 static/css/index.css    # theme + interactive component styles
 static/js/index.js      # nav, loop walkthrough, results matrix, rule builder, lightbox
 static/images/          # figures copied from the paper
+```
+
+`rollouts.html` and `rollouts/` are generated, never hand-edited. Each task is one vertical
+sprite of eight frames that the page shifts to scrub, so a visitor downloads only the rollouts
+they scroll to rather than one large bundle:
+
+```bash
+cd ../AGI
+python tools/make_liberox_frames_figure.py --web ../AgenticIntelligence
 ```
 
 ## Where the numbers come from
