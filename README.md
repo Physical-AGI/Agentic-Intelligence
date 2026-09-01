@@ -51,12 +51,31 @@ Every figure and number on the page is transcribed from the paper source at
 | Selector ladder | Table `tab:ablation_selector`, panel (b) |
 | Interface diagnostics | Table `tab:ablation_interface` |
 | Planning cost | Table `tab:realtime` |
-| Qualitative rollouts | `Figs/LIBERO_four_suite_successful_frames.jpg` |
+| Qualitative rollouts | `Figs/LIBERO_PRO_four_suite_successful_frames.jpg` |
+| Meta-World rollouts | `Figs/MetaWorld_four_difficulty_successful_frames.jpg` |
+| LIBERO-X rollouts | `Figs/LIBEROX_four_verb_successful_frames.jpg` |
 | Auditability | `Figs/interpretability_vs_blackbox.png` |
 
 Machine-readable copies of the same tables live in `../AGI/results/paper/*.json`. If the paper
 tables change, update `PRO_METHODS` / `RULES` in `static/js/index.js` and the static tables in
 `index.html` to match.
+
+The two rollout figures are rebuilt from the evaluation logs, not hand-assembled:
+
+```bash
+cd ../AGI
+python tools/make_metaworld_frames_figure.py     # --list / --score / --tasks to swap a row
+python tools/make_liberox_frames_figure.py       # --list / --tasks to swap a row
+cp "ICRA'27_Agentic Model/Figs/MetaWorld_four_difficulty_successful_frames.jpg" \
+   ../AgenticIntelligence/static/images/metaworld_frames.jpg
+cp "ICRA'27_Agentic Model/Figs/LIBEROX_four_verb_successful_frames.jpg" \
+   ../AgenticIntelligence/static/images/liberox_frames.jpg
+```
+
+Both draw only on episodes the success checker accepted. Note that they come from runs on our own
+hardware: the Meta-World panel above is a cross-paper comparison with a different protocol, and the
+LIBERO-X sweep behind those frames uses a different checkpoint and task set from the severity table.
+The captions say so.
 
 Page template adapted from [Nerfies](https://nerfies.github.io), licensed
 [CC BY-SA 4.0](http://creativecommons.org/licenses/by-sa/4.0/).

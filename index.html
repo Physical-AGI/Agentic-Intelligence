@@ -669,6 +669,35 @@
           &pi;<sub>0</sub> 15.0, X-VLA 14.6, OpenVLA-OFT 13.2.
         </p>
       </div>
+
+      <h3 class="title is-4 has-text-centered" style="margin-top:3rem">Rollouts on both benchmarks</h3>
+      <p class="ai-section-intro">
+        Frames sampled evenly from successful episodes, initial state through execution to the terminal state the
+        success checker accepted. The green outline marks the largest region of each frame that differs from the
+        static scene &mdash; the camera never moves, so the median of an episode is the empty scene. It is computed
+        from pixels to trace the arm, and is not an object detection.
+      </p>
+
+      <figure class="ai-figure">
+        <img src="static/images/metaworld_frames.jpg" class="ai-zoomable" loading="lazy"
+             alt="Rollout frames from initial state through execution to end state for one Meta-World task from each of the Easy, Medium, Hard and Very Hard difficulty splits">
+        <figcaption>
+          <strong>Meta-World rollouts, one task per difficulty split.</strong> Easy presses a top-down button,
+          Medium drives a hammer, Hard lifts a puck out of a hole, and Very Hard disassembles a peg. Drawn from
+          our own evaluation runs rather than the cross-paper table above, whose protocol differs.
+        </figcaption>
+      </figure>
+
+      <figure class="ai-figure">
+        <img src="static/images/liberox_frames.jpg" class="ai-zoomable" loading="lazy"
+             alt="Rollout frames from initial state through execution to end state for four LIBERO-X kitchen tasks: placing, stacking, turning on a stove and opening a microwave">
+        <figcaption>
+          <strong>LIBERO-X rollouts, one task per action.</strong> The arm moves a bowl onto a plate, stacks one
+          bowl on another, turns a stove on until the burner glows, and swings a microwave door open. Drawn from a
+          Level&nbsp;1 sweep on our own hardware, which uses a different checkpoint and task set from the
+          severity table above.
+        </figcaption>
+      </figure>
     </div>
   </section>
 
