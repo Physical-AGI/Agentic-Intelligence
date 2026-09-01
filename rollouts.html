@@ -144,17 +144,18 @@
   <header>
     <p class="eyebrow">LIBERO-X &middot; LEVEL 1 &middot; Kitchen extension</p>
     <h1>Successful rollouts, frame by frame</h1>
-    <p class="lede">Every task with at least one successful episode &mdash;
-      <b>125</b> of 259 &mdash; sampled at <b>8</b> frames from
+    <p class="lede">Every task with at least one successful episode
+      (<b>125</b> of 259), sampled at <b>8</b> frames from
       initial state to terminal state. Scrub a strip, or turn on tracking
       to follow the arm through the scene.</p>
     <p class="provenance">These frames come from <code>logs/liberox/LEVEL1</code>.
       <code>results/paper/liberox.json</code> records that sweep as using a
       different checkpoint and task set, <strong>not merged</strong> into the
-      paper's LIBERO-X table &mdash; so they show this run, not the reported
-      numbers. Motion tracking marks the largest region that changed since the
-      previous frame; it is computed from pixels and is <strong>not</strong> an
-      object detection or the policy's own grounding, which these logs never
+      paper's LIBERO-X table, so they show this run, not the reported
+      numbers. Tracking marks the largest region of each frame that differs from
+      the static scene; the camera never moves, so the median of an episode is
+      the empty kitchen. It is computed from pixels and is <strong>not</strong>
+      an object detection or the policy's own grounding, which these logs never
       recorded. DSL actions, program attempts and env steps are read verbatim
       from <code>episodes.jsonl</code>.</p>
   </header>
