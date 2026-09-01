@@ -674,7 +674,7 @@
       <p class="ai-section-intro">
         Frames sampled evenly from successful episodes, initial state through execution to the terminal state the
         success checker accepted. The green outline marks the largest region of each frame that differs from the
-        static scene &mdash; the camera never moves, so the median of an episode is the empty scene. It is computed
+        static scene. The camera never moves, so the median of an episode is the empty scene. It is computed
         from pixels to trace the arm, and is not an object detection.
       </p>
 
@@ -948,13 +948,17 @@
 
       <figure class="ai-figure" style="margin-top:0">
         <img src="static/images/auditability.png" class="ai-zoomable"
-             alt="Side-by-side comparison: a low-level VLA policy emits opaque joint velocities with no explainable trace, while the program-generating approach emits inspectable source code where a syntax error is visible and debuggable">
+             alt="Side-by-side comparison: a low-level VLA policy emits opaque joint velocities with no explainable trace, while the program-generating approach emits inspectable source code in which the failing coordinate literal can be read off directly">
         <figcaption>
           <strong>Decision auditability enabled by the explicit program interface.</strong> A reactive VLA exposes
           primarily its selected motor output, whereas our system records ordered candidate programs, AST validity,
           imagined latent consequences, verifier scores and the selected commitment before execution. Invalid code is
           rejected without motor action, and retained alternatives permit post-hoc diagnosis of whether a failure
           arose from proposal, parsing, prediction, selection or execution.
+          Panel (b) is a real episode: four candidate programs for one perturbed drawer instruction, all valid
+          Python, none successful. Each grasps at the same height and pulls to the same depth, and the replans
+          vary only the approach distance, so the trace localises the failure to the one coordinate the search
+          never revisited. Reading that off a joint-velocity stream is not possible.
         </figcaption>
       </figure>
 
