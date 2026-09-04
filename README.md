@@ -1,4 +1,4 @@
-# Agentic Intelligence and Latent Lookahead for Robust Manipulation
+# AGI: Agentic Intelligence and Latent Lookahead for Robust Manipulation
 
 Project page for the ICRA 2027 submission.
 
