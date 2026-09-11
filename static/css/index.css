@@ -851,8 +851,20 @@ section[id] { scroll-margin-top: 4.5rem; }
 
 .ai-stats {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(5, 1fr);
   gap: 1rem;
+}
+
+@media screen and (max-width: 1024px) {
+  .ai-stats {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media screen and (max-width: 640px) {
+  .ai-stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
 .ai-stat {
@@ -1082,6 +1094,15 @@ section[id] { scroll-margin-top: 4.5rem; }
 
 .ai-table tbody tr.ai-ours:hover { background: rgba(79, 70, 229, 0.14); }
 .ai-table tbody tr.ai-ours th, .ai-table tbody tr.ai-ours td { color: var(--text-primary); }
+
+.ai-table tbody tr.ai-mean-row {
+  border-top: 2px solid var(--border-color);
+  border-bottom: 2px solid var(--border-color);
+  background: var(--background-secondary);
+}
+.ai-table tbody tr.ai-mean-row th, .ai-table tbody tr.ai-mean-row td {
+  color: var(--text-secondary);
+}
 
 .ai-ours-tag {
   display: inline-block;
@@ -1692,3 +1713,154 @@ section[id] { scroll-margin-top: 4.5rem; }
 }
 
 .ai-loop-detail p.ai-loop-body { font-size: 0.89rem; }
+
+/* --- Real Robot Section --- */
+.ai-realrobot-overview {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin: 1.5rem 0 2rem;
+}
+
+.ai-realrobot-card {
+  padding: 1.1rem 1.25rem;
+  border-radius: var(--border-radius);
+  background: var(--background-primary);
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.ai-realrobot-card .ai-card-label {
+  font-size: 0.76rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-light);
+}
+
+.ai-realrobot-card .ai-card-val {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: var(--text-primary);
+}
+
+.ai-realrobot-card .ai-card-sub {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+}
+
+.ai-video-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+  margin: 2rem 0;
+}
+
+.ai-video-card {
+  background: var(--background-primary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  transition: var(--transition);
+}
+
+.ai-video-card:hover {
+  box-shadow: var(--shadow-md);
+  border-color: var(--primary-color);
+}
+
+.ai-video-header {
+  padding: 0.9rem 1.15rem;
+  background: var(--background-secondary);
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.ai-video-title {
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.ai-video-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.2rem 0.55rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+.ai-badge-red { background: #b91c1c; }
+.ai-badge-blue { background: #1d4ed8; }
+.ai-badge-pink { background: #be185d; }
+.ai-badge-green { background: #047857; }
+
+.ai-video-player-box {
+  position: relative;
+  background: #0f172a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 320px;
+  overflow: hidden;
+}
+
+.ai-video-player-box video {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+  background: #000;
+}
+
+.ai-video-footer {
+  padding: 1rem 1.15rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  font-size: 0.86rem;
+  color: var(--text-secondary);
+  flex: 1;
+}
+
+.ai-video-instruction {
+  font-family: monospace;
+  font-size: 0.8rem;
+  background: var(--background-accent);
+  padding: 0.35rem 0.6rem;
+  border-radius: 6px;
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+}
+
+.ai-video-meta {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.78rem;
+  color: var(--text-light);
+  margin-top: 0.2rem;
+}
+
+@media screen and (max-width: 768px) {
+  .ai-video-grid {
+    grid-template-columns: 1fr;
+  }
+  .ai-video-player-box {
+    height: 260px;
+  }
+}
+

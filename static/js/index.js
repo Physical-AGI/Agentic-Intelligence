@@ -402,7 +402,28 @@ var PRO_METHODS = [
     object: [0.89, 0.02, 0.98, 0.08, null]
   },
   {
-    name: 'Agentic Intelligence', ours: true, avg: 0.64,
+    name: 'Cosmos-Policy', avg: 0.40,
+    goal: [0.982, 0.007, null, 0.007, null],
+    spatial: [0.981, 0.307, null, 0.307, null],
+    libero10: [null, null, null, null, null],
+    object: [1.000, 0.003, null, 0.003, null]
+  },
+  {
+    name: 'Fast-WAM', avg: 0.39,
+    goal: [0.970, 0.157, null, 0.157, null],
+    spatial: [0.982, 0.127, null, 0.127, null],
+    libero10: [null, null, null, null, null],
+    object: [1.000, 0.000, null, 0.000, null]
+  },
+  {
+    name: '<em>Baseline mean (n=3)</em>', isMean: true, avg: 0.50,
+    goal: [0.96, 0.13, 0.96, 0.00, 0.61],
+    spatial: [0.96, 0.07, 0.97, 0.00, 0.65],
+    libero10: [0.84, 0.03, 0.90, 0.00, 0.53],
+    object: [0.97, 0.06, 0.95, 0.00, 0.34]
+  },
+  {
+    name: 'AGI', ours: true, avg: 0.64,
     goal: [0.89, 0.43, 0.91, 0.27, 0.84],
     spatial: [0.92, 0.50, 0.73, 0.49, 0.55],
     libero10: [0.94, 0.29, 0.88, 0.16, 0.89],
@@ -432,7 +453,8 @@ function setupProTable() {
   function render() {
     tbody.innerHTML = PRO_METHODS.map(function (m) {
       var values = m[state.suite];
-      return '<tr' + (m.ours ? ' class="ai-ours"' : '') + '>' +
+      var trClass = m.ours ? ' class="ai-ours"' : (m.isMean ? ' class="ai-mean-row"' : '');
+      return '<tr' + trClass + '>' +
         '<th scope="row">' + m.name +
         (m.ours ? ' <span class="ai-ours-tag">Ours</span>' : '') + '</th>' +
         values.map(function (v) { return cell(v, false); }).join('') +
