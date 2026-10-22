@@ -121,8 +121,6 @@
       <i class="fas fa-bars"></i>
     </button>
     <div class="ai-nav-links" id="ai-nav-links">
-      <a href="#abstract">Abstract</a>
-      <a href="#method">Method</a>
       <a href="#real-robot">Real Robot</a>
       <a href="#results">LIBERO-PRO</a>
       <a href="#benchmarks">Benchmarks</a>
@@ -247,230 +245,6 @@
           <div class="ai-stat-value" data-count-to="15.46" data-decimals="2" data-suffix=" ms">0 ms</div>
           <div class="ai-stat-label">Local verification per cycle</div>
         </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Abstract -->
-  <section class="section hero is-light" id="abstract">
-    <div class="container is-max-desktop">
-      <div class="columns is-centered has-text-centered">
-        <div class="column is-four-fifths">
-          <h2 class="title is-3">Abstract</h2>
-          <div class="content has-text-justified">
-            <p>
-              Vision-language-action policies that succeed in distribution collapse under small geometric perturbation:
-              on the Position and Task axes of LIBERO-PRO Spatial, OpenVLA and &pi;<sub>0</sub> score 0.00 while retaining
-              near-ceiling success on the axes that leave geometry intact. Direct action generation also exposes no
-              commitment that can be inspected, compared, or rejected before the arm moves. We present <strong>AGI</strong>,
-              an agent-as-policy decomposition in which a frozen vision-language agent proposes <em>K</em> programs in a
-              nine-primitive, literal-only robot DSL, a Code-to-Token Bridge conditions a JEPA-style latent world model on
-              each complete program, and a verifier ranks the predicted latent trajectories before any motor command; the
-              selected program executes for &kappa; primitives and the loop replans on fresh observations. AGI reaches
-              0.50/0.49 Position/Task success where both baselines score 0.00, 94.0% average success on Meta-World v3,
-              52.9% on LIBERO-X, and 83.8% (67/80) on real tabletop pick-and-place with a Piper (WEGO) arm. To separate
-              proposal quality from selection quality, we evaluate on byte-identical candidate sets restored from
-              <em>N</em><sub>fork</sub> = 800 simulator states with oracle and anti-oracle bounds: latent ranking raises
-              Top-1 success from 0.57 to 0.63 over first-valid selection and captures &eta; = 0.40 of the oracle headroom
-              (95% CI 0.22&ndash;0.58; exact McNemar <em>p</em> &lt; 0.001). The full local stack holds 277M parameters
-              and verifies <em>K</em> = 3 candidates at <em>H</em> = 8 in 15.46 ms, while the frozen remote proposer
-              dominates the 10.02 s synchronous decision path. Oracle coverage of 0.75 identifies candidate generation,
-              not ranking, as the remaining constraint.
-            </p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Method -->
-  <section class="section" id="method">
-    <div class="container is-max-desktop">
-      <h2 class="title is-3 has-text-centered">The Planning Loop</h2>
-      <p class="ai-section-intro">
-        One planning round runs four stages. Pick a stage to see what it does and what it costs.
-      </p>
-
-      <div class="ai-loop">
-        <div class="ai-loop-stages" role="tablist" aria-label="Planning stages">
-          <button class="ai-stage" role="tab" aria-selected="true" data-stage="propose" style="--stage-c:var(--stage-propose)">
-            <span class="ai-stage-num">1</span>
-            <span>
-              <span class="ai-stage-name">Propose</span>
-              <span class="ai-stage-sub">Frozen agent &rarr; K DSL programs</span>
-            </span>
-          </button>
-          <div class="ai-stage-arrow" role="presentation" aria-hidden="true"><i class="fas fa-arrow-down"></i></div>
-
-          <button class="ai-stage" role="tab" aria-selected="false" data-stage="imagine" style="--stage-c:var(--stage-imagine)">
-            <span class="ai-stage-num">2</span>
-            <span>
-              <span class="ai-stage-name">Imagine</span>
-              <span class="ai-stage-sub">Latent rollout, H steps per candidate</span>
-            </span>
-          </button>
-          <div class="ai-stage-arrow" role="presentation" aria-hidden="true"><i class="fas fa-arrow-down"></i></div>
-
-          <button class="ai-stage" role="tab" aria-selected="false" data-stage="verify" style="--stage-c:var(--stage-verify)">
-            <span class="ai-stage-num">3</span>
-            <span>
-              <span class="ai-stage-name">Verify</span>
-              <span class="ai-stage-sub">Score trajectories, pick the winner</span>
-            </span>
-          </button>
-          <div class="ai-stage-arrow" role="presentation" aria-hidden="true"><i class="fas fa-arrow-down"></i></div>
-
-          <button class="ai-stage" role="tab" aria-selected="false" data-stage="execute" style="--stage-c:var(--stage-execute)">
-            <span class="ai-stage-num">4</span>
-            <span>
-              <span class="ai-stage-name">Execute</span>
-              <span class="ai-stage-sub">Commit &kappa; primitives, then re-observe</span>
-            </span>
-          </button>
-        </div>
-
-        <div class="ai-loop-detail" id="ai-loop-detail">
-          <div class="ai-loop-eyebrow"></div>
-          <h3></h3>
-          <p class="ai-loop-lead"></p>
-          <p class="ai-loop-body"></p>
-          <div class="ai-loop-spec"></div>
-        </div>
-      </div>
-
-      <figure class="ai-figure">
-        <img src="static/images/framework.png" class="ai-zoomable"
-             alt="The full framework: observation and task instruction feed a frozen vision-language agent that returns K candidate DSL programs, which are embedded by the program encoder, rolled out by a V-JEPA encoder and program dynamics model, scored by a trajectory verifier, and executed by an AST-parsed operational-space controller">
-        <figcaption>
-          <strong>The complete verify-then-execute framework.</strong> A frozen vision-language agent
-          (<span style="color:#d97706;font-weight:700">&#9312; Propose</span>) returns an ordered list of
-          <em>K</em> raw program candidates from one request under fixed decoding settings. Candidates are parsed
-          first; valid programs are embedded by the Code-to-Token Bridge and rolled out in the latent space of a
-          JEPA-style world model frozen during planning
-          (<span style="color:#2563eb;font-weight:700">&#9313; Imagine</span>). The verifier
-          (<span style="color:#7c3aed;font-weight:700">&#9314; Verify</span>) scores each imagined trajectory against
-          the task embedding and selects the winner, executed through operational-space-control primitives
-          (<span style="color:#059669;font-weight:700">&#9315; Execute</span>). When a commit ends without success the
-          agent re-observes and starts another planning round, at most <em>N</em> rounds within the 600-step budget.
-        </figcaption>
-      </figure>
-
-      <h2 class="title is-3 has-text-centered" style="margin-top:3.5rem">Components</h2>
-      <p class="ai-section-intro">Four learned or symbolic pieces sit between language and motor commands.</p>
-
-      <div class="ai-tabs" role="tablist">
-        <button class="ai-tab is-active" role="tab" aria-selected="true" data-tab="dsl">Robot DSL</button>
-        <button class="ai-tab" role="tab" aria-selected="false" data-tab="bridge">Code-to-Token Bridge</button>
-        <button class="ai-tab" role="tab" aria-selected="false" data-tab="world">Latent World Model</button>
-        <button class="ai-tab" role="tab" aria-selected="false" data-tab="verifier">Trajectory Verifier</button>
-      </div>
-
-      <div class="ai-tab-panel is-active" role="tabpanel" data-panel="dsl">
-        <div class="ai-note-grid">
-          <div class="ai-note">
-            <h3>What it is</h3>
-            <p>Nine primitives, each taking literal arguments only. Cartesian positions are metres in the robot-base
-              frame, orientations are normalized quaternions with <em>q<sub>w</sub></em>&nbsp;&ge;&nbsp;0, joint
-              targets are radians, and <code>wait</code> takes an integer number of low-level steps.</p>
-          </div>
-          <div class="ai-note">
-            <h3>Why it matters</h3>
-            <p>The executor never queries a simulator object pose, so the program must carry the geometric target
-              literals the tracker needs. Writing coordinates rather than replaying a trajectory is what keeps
-              Position-axis success nonzero.</p>
-          </div>
-        </div>
-
-        <div class="ai-dsl">
-          <code>move_to</code><code>move_to_pose</code><code>grasp</code><code>release</code><code>place</code><code>move_joints</code><code>open_gripper</code><code>close_gripper</code><code>wait</code>
-        </div>
-
-        <pre class="ai-snippet" style="margin-top:1.25rem"><code><span class="c"># one candidate program, parsed by AST before anything learned sees it</span>
-<span class="f">robot.open_gripper</span>()
-<span class="f">robot.move_to</span>(<span class="n">-0.22</span>, <span class="n">0.02</span>, <span class="n">1.02</span>)
-<span class="f">robot.grasp</span>(<span class="n">'bowl'</span>)
-<span class="f">robot.place</span>(<span class="n">0.07</span>, <span class="n">0.16</span>, <span class="n">1.00</span>)
-<span class="f">robot.release</span>()</code></pre>
-        <p class="ai-table-note">
-          The AST interpreter whitelists the nine primitives, accepts literals only, and never invokes
-          <code>exec()</code>. Invalid programs are discarded without repair.
-        </p>
-      </div>
-
-      <div class="ai-tab-panel" role="tabpanel" data-panel="bridge">
-        <div class="ai-note-grid">
-          <div class="ai-note">
-            <h3>What it does</h3>
-            <p>Tokenizes DSL source with BPE under a 256-token cap, applies a 4-layer, 8-head transformer with masked
-              mean pooling, and projects to a 512-d program embedding that the world model can consume as
-              conditioning.</p>
-          </div>
-          <div class="ai-note">
-            <h3>How it is trained</h3>
-            <p>Contrastively, on labeled program pairs: a BCE term on scaled cosine similarity plus a symmetric
-              InfoNCE term at temperature 0.1. The loss groups literal variants of one behavior and separates distinct
-              skills.</p>
-          </div>
-        </div>
-        <p class="ai-table-note">
-          <strong>Stated limitation.</strong> The loss constrains program-to-program geometry, not alignment to the
-          training-time action surrogate the dynamics head was fit on, so substituting the bridge at inference is
-          empirical rather than invariant by construction. Adding paired alignment raises Pair-AUC from 0.70 to 0.78
-          in the interface ablation below.
-        </p>
-      </div>
-
-      <div class="ai-tab-panel" role="tabpanel" data-panel="world">
-        <div class="ai-note-grid">
-          <div class="ai-note">
-            <h3>Dual encoder</h3>
-            <p>Online and target ViT-B/14 encoders share architecture; the stop-gradient target follows an EMA with
-              &alpha;&nbsp;=&nbsp;0.996. Twelve transformer blocks encode each 224&times;224 frame, temporal attention
-              pools per-frame CLS tokens, and projected 14-d proprioception is added to the 768-d output.</p>
-          </div>
-          <div class="ai-note">
-            <h3>Two heads</h3>
-            <p>An action-dynamics head grounds the encoder in single-step consequences during pretraining. A
-              program-conditioned head decodes <em>H</em> queries from the seed latent, with AdaLN-Zero conditioning
-              made explicitly horizon-dependent so the modulation varies with the prediction step.</p>
-          </div>
-        </div>
-        <p class="ai-table-note">
-          Every learned loss lives in the 768-dimensional latent space; the architecture contains no pixel decoder.
-          Removing the horizon code worsens normalized latent MSE from 0.35/0.60 to 0.42/0.80 at horizons 3 and 8, and
-          drops selector efficiency from 0.40 to 0.25.
-        </p>
-
-        <figure class="ai-figure" style="margin-top:1.25rem">
-          <img src="static/images/liberox_latent_imagination.png" class="ai-zoomable" loading="lazy"
-               alt="Latent imagination rollouts in feature space across prediction steps">
-          <figcaption>
-            <strong>Latent imagination in feature space.</strong> The program-conditioned dynamics head decodes
-            multi-step feature trajectories from the seed observation latent without pixel decoding, predicting
-            physical consequences directly in representation space.
-          </figcaption>
-        </figure>
-      </div>
-
-      <div class="ai-tab-panel" role="tabpanel" data-panel="verifier">
-        <div class="ai-note-grid">
-          <div class="ai-note">
-            <h3>Two heads, one score</h3>
-            <p>A 2-layer MLP trunk over the concatenation of each latent and the frozen task embedding, with a horizon
-              head estimating success by step <em>h</em> and a terminal head estimating success at the end. The
-              planning score is half the terminal head plus half the horizon mean.</p>
-          </div>
-          <div class="ai-note">
-            <h3>Sparse supervision only</h3>
-            <p>Both heads train on the sparse task-success predicate, with the horizon head weighted at 0.5. The
-              verifier never reads program text, so different scores require the dynamics model to separate imagined
-              outcomes.</p>
-          </div>
-        </div>
-        <p class="ai-table-note">
-          <strong>Stated limitation.</strong> Training consumes stop-gradient target-encoder trajectories while
-          planning scores imagined ones, leaving a measured encoded-to-imagined AUROC gap of 0.06 (0.78 versus 0.72).
-        </p>
       </div>
     </div>
   </section>
@@ -687,7 +461,7 @@
   </section>
 
   <!-- Cross-benchmark -->
-  <section class="section" id="benchmarks">
+  <section class="section hero is-light" id="benchmarks">
     <div class="container is-max-desktop">
       <h2 class="title is-3 has-text-centered">Meta-World and LIBERO-X</h2>
       <p class="ai-section-intro">Hover a bar to read its exact value.</p>
@@ -911,7 +685,7 @@
   </section>
 
   <!-- Ablation -->
-  <section class="section hero is-light" id="ablation">
+  <section class="section" id="ablation">
     <div class="container is-max-desktop">
       <h2 class="title is-3 has-text-centered">What Each Part Is Worth</h2>
       <p class="ai-section-intro">
@@ -1081,7 +855,7 @@
   </section>
 
   <!-- Efficiency -->
-  <section class="section" id="efficiency">
+  <section class="section hero is-light" id="efficiency">
     <div class="container is-max-desktop">
       <h2 class="title is-3 has-text-centered">Verification Is Not the Bottleneck</h2>
       <p class="ai-section-intro">
@@ -1145,7 +919,7 @@
   </section>
 
   <!-- Auditability -->
-  <section class="section hero is-light" id="auditability">
+  <section class="section" id="auditability">
     <div class="container is-max-desktop">
       <h2 class="title is-3 has-text-centered">An Auditable Decision Record</h2>
       <p class="ai-section-intro">
@@ -1203,7 +977,7 @@
   </section>
 
   <!-- BibTeX -->
-  <section class="section" id="bibtex">
+  <section class="section hero is-light" id="bibtex">
     <div class="container is-max-desktop content">
       <div class="bibtex-header">
         <h2 class="title">BibTeX</h2>
